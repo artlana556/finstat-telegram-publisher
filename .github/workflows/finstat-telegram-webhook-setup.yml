@@ -1,0 +1,24 @@
+name: FINSTAT - Configure Telegram assistant webhook
+on:
+  workflow_dispatch:
+    inputs:
+      webhook_url:
+        description: "Deployed HTTPS function URL ending in /api/telegram"
+        type: string
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  configure:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - name: Register Telegram webhook
+        env:
+          FINSTAT_TELEGRAM_BOT_TOKEN: ${{ secrets.FINSTAT_TELEGRAM_BOT_TOKEN }}
+          FINSTAT_TELEGRAM_WEBHOOK_SECRET: ${{ secrets.FINSTAT_TELEGRAM_WEBHOOK_SECRET }}
+          WEBHOOK_URL: ${{ inputs.webhook_url }}
+        run: python3 tools/finstat_telegram/configure_webhook.py
