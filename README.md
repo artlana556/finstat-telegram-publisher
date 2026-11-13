@@ -10,7 +10,7 @@ This pilot runs **only when the repository owner manually starts it** in GitHub 
 1. Add the Telegram bot FINSTAT Publisher as a channel admin with **post messages** permission only.
 2. Open this repo → Settings → Secrets and variables → Actions → New repository secret.
 3. Name: `FINSTAT_TELEGRAM_BOT_TOKEN`. Paste the BotFather token there. Never commit or send the token in chat.
-4. Review the proposed workflow and post in the pull request, then merge to default branch `main`.
+4. Review the workflow and approved post files in this repository (already on the default branch `main`).
 5. Open Actions → `FINSTAT - Publish approved Telegram post` → Run workflow. Leave the default post path, or specify another **approved .txt** file.
 
 ## Safety & limitations
