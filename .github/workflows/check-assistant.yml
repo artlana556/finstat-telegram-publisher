@@ -1,0 +1,24 @@
+name: FINSTAT - Check assistant source
+on:
+  push:
+    paths:
+      - 'netlify/functions/**'
+      - 'tests/**'
+      - '.github/workflows/check-assistant.yml'
+  pull_request:
+    paths:
+      - 'netlify/functions/**'
+      - 'tests/**'
+      - '.github/workflows/check-assistant.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run offline Node tests
+        run: node --test tests/*.test.mjs
