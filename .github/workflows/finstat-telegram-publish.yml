@@ -1,0 +1,31 @@
+name: FINSTAT - Publish approved Telegram post
+
+on:
+  workflow_dispatch:
+    inputs:
+      post_file:
+        description: "Approved .txt file under telegram-posts/approved/"
+        required: true
+        default: "telegram-posts/approved/001_welcome.txt"
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: finstat-telegram-publisher
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Checkout approved post
+        uses: actions/checkout@v4
+      - name: Publish to FINSTAT channel
+        env:
+          FINSTAT_TELEGRAM_BOT_TOKEN: ${{ secrets.FINSTAT_TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHANNEL: "@finstatpro"
+          POST_FILE: ${{ inputs.post_file }}
+        run: python3 tools/finstat_telegram/publish.py
